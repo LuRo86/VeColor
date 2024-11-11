@@ -44,17 +44,18 @@ header h1 {
 .canvas-container {
   position: relative;
   width: 100%;
-  border: 2px solid #7A6DE3; /* Color del borde igual al de logo y botones */
-  border-radius: 8px;
-  overflow: hidden;
+  height: 100%; /* Ocupa todo el largo del contenedor */
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #7A6DE3; /* Color del borde igual al de logo y botones */
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 canvas {
   width: 100%;
-  height: auto;
+  height: 100%; /* Ocupa todo el largo del contenedor */
   cursor: grab;
 }
 
