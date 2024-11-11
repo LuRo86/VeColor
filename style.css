@@ -45,10 +45,9 @@ canvas {
   width: 100%;
   max-width: 100%;
   height: auto;
-  border: 1px solid #0D47A1;
+  border: 2px solid #7A6DE3; /* Color del borde igual al de logo y botones */
   border-radius: 8px;
-  margin-top: 15px;
-  cursor: crosshair;
+  cursor: grab;
 }
 
 /* Estilos para el footer */
