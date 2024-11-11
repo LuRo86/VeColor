@@ -18,7 +18,7 @@ body {
 /* Encabezado con logo en la esquina superior izquierda */
 header {
   position: absolute;
-  top: 20px;
+  top: 40px; /* Mueve el logo hacia abajo */
   left: 20px;
 }
 
@@ -28,20 +28,28 @@ header h1 {
   margin: 0;
 }
 
-/* Estilo del contenedor */
+/* Estilo del contenedor central */
 .container {
+  flex: 1;
   width: 100%;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 80px; /* Ajusta espacio debajo del logo */
+  margin-bottom: 60px; /* Ajusta espacio encima del footer */
 }
 
 canvas {
   width: 100%;
   max-width: 100%;
+  height: auto; /* Ajusta la altura del canvas */
   border: 1px solid #0D47A1;
   border-radius: 8px;
   margin-top: 15px;
@@ -90,7 +98,7 @@ footer {
   background-color: #7A6DE3;
   padding: 10px 0;
   position: fixed;
-  bottom: 0;
+  bottom: 20px; /* Mueve el footer un poco más hacia arriba */
 }
 
 .nav-button {
