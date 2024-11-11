@@ -2,15 +2,8 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const upload = document.getElementById('upload');
 const colorInfo = document.getElementById('color-info');
-const zoomInButton = document.getElementById('zoom-in');
-const zoomOutButton = document.getElementById('zoom-out');
 
 let img = new Image();
-let scale = 1;
-let panX = 0;
-let panY = 0;
-let isDragging = false;
-let startX, startY;
 
 // Función para cargar la imagen seleccionada en el canvas y ajustarla al tamaño del canvas
 upload.addEventListener('change', (e) => {
@@ -19,11 +12,11 @@ upload.addEventListener('change', (e) => {
   reader.onload = (event) => {
     img = new Image();
     img.onload = () => {
-      scale = 1;
-      panX = 0;
-      panY = 0;
+      // Ajustar el tamaño del canvas para que coincida con el contenedor y la imagen cargada
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
       ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
-      drawImage();
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujar la imagen ajustada al tamaño del canvas
       colorInfo.innerText = "Pulsa en algún lugar de la imagen para detectar color";
       colorInfo.style.color = "#7A6DE3";
     };
@@ -32,53 +25,11 @@ upload.addEventListener('change', (e) => {
   reader.readAsDataURL(file);
 });
 
-// Función para dibujar la imagen con el zoom y desplazamiento
-function drawImage() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.save();
-  ctx.translate(panX, panY);
-  ctx.scale(scale, scale);
-  ctx.drawImage(img, 0, 0);
-  ctx.restore();
-}
-
-// Zoom in y zoom out
-zoomInButton.addEventListener('click', () => {
-  scale = Math.min(scale + 0.1, 3); // Limita el zoom máximo a 3x
-  drawImage();
-});
-
-zoomOutButton.addEventListener('click', () => {
-  scale = Math.max(scale - 0.1, 0.5); // Limita el zoom mínimo a 0.5x
-  drawImage();
-});
-
-// Desplazamiento de la imagen
-canvas.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startX = e.clientX - panX;
-  startY = e.clientY - panY;
-  canvas.style.cursor = 'grabbing';
-});
-
-canvas.addEventListener('mousemove', (e) => {
-  if (isDragging) {
-    panX = e.clientX - startX;
-    panY = e.clientY - startY;
-    drawImage();
-  }
-});
-
-canvas.addEventListener('mouseup', () => {
-  isDragging = false;
-  canvas.style.cursor = 'grab';
-});
-
 // Función para detectar el color del píxel en la posición clicada
 canvas.addEventListener('click', (e) => {
   const rect = canvas.getBoundingClientRect();
-  const x = Math.floor((e.clientX - rect.left - panX) / scale);
-  const y = Math.floor((e.clientY - rect.top - panY) / scale);
+  const x = Math.floor((e.clientX - rect.left) * (img.width / canvas.width));
+  const y = Math.floor((e.clientY - rect.top) * (img.height / canvas.height));
 
   const pixelData = ctx.getImageData(x, y, 1, 1).data;
   const [r, g, b, a] = pixelData;
