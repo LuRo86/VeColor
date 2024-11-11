@@ -15,7 +15,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Encabezado con logo en la esquina superior izquierda */
 header {
   position: absolute;
   top: 40px; /* Mueve el logo hacia abajo */
@@ -28,15 +27,11 @@ header h1 {
   margin: 0;
 }
 
-/* Estilo del contenedor central */
+/* Estilo del contenedor */
 .container {
   flex: 1;
   width: 100%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   background-color: #fff;
   padding: 20px;
@@ -49,58 +44,24 @@ header h1 {
 canvas {
   width: 100%;
   max-width: 100%;
-  height: auto; /* Ajusta la altura del canvas */
+  height: auto;
   border: 1px solid #0D47A1;
   border-radius: 8px;
   margin-top: 15px;
   cursor: crosshair;
 }
 
-#upload {
-  display: block;
-  width: 100%; /* Ajusta el ancho al contenedor */
-  margin: 0 auto;
-  margin-top: 15px;
-  padding: 10px;
-  font-size: 1rem;
-  color: #0D47A1;
-  border: 1px solid #0D47A1;
-  border-radius: 8px;
-  background-color: #FFF;
-  cursor: pointer;
-  box-sizing: border-box; /* Evita que el padding aumente el tamaño */
-}
-
-#detect-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #000;
-  color: #FFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#color-info {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #7A6DE3;
-  font-weight: bold;
-}
-
-/* Footer Navigation */
+/* Estilos para el footer */
 footer {
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 100%;
   background-color: #7A6DE3;
-  padding: 20px 0; /* Aumenta el padding para ocupar más espacio */
+  padding: 20px 0;
   position: fixed;
   bottom: 0;
-  height: 60px; /* Ajusta la altura para que llene el espacio vacío */
+  height: 60px;
 }
 
 .nav-button {
@@ -111,4 +72,51 @@ footer {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+}
+
+/* Estilos del interruptor tipo iOS */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-top: 20px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #7A6DE3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
