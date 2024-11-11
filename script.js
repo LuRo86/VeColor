@@ -15,6 +15,10 @@ upload.addEventListener('change', (e) => {
       const y = (canvas.height / 2) - (img.height / 2) * scale;
       ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+      
+      // Mostrar mensaje al cargar imagen
+      colorInfo.innerText = "Pulsa en algún lugar de la imagen para detectar color";
+      colorInfo.style.color = "#7A6DE3"; // Ajuste de color para el mensaje
     };
     img.src = event.target.result;
   };
