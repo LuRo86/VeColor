@@ -3,33 +3,48 @@ const ctx = canvas.getContext('2d');
 const upload = document.getElementById('upload');
 const colorInfo = document.getElementById('color-info');
 
+let img = new Image();
+let scale = 1;
+let panX = 0;
+let panY = 0;
+let isDragging = false;
+let startX, startY;
+
 // Función para cargar la imagen seleccionada en el canvas y ajustarla al tamaño del canvas
 upload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.onload = (event) => {
-    const img = new Image();
+    img = new Image();
     img.onload = () => {
-      const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
-      const x = (canvas.width / 2) - (img.width / 2) * scale;
-      const y = (canvas.height / 2) - (img.height / 2) * scale;
+      scale = 1;
+      panX = 0;
+      panY = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
-      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-      
-      // Mostrar mensaje al cargar imagen
+      drawImage();
       colorInfo.innerText = "Pulsa en algún lugar de la imagen para detectar color";
-      colorInfo.style.color = "#7A6DE3"; // Ajuste de color para el mensaje
+      colorInfo.style.color = "#7A6DE3";
     };
     img.src = event.target.result;
   };
   reader.readAsDataURL(file);
 });
 
+// Función para dibujar la imagen con el zoom y desplazamiento
+function drawImage() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(panX, panY);
+  ctx.scale(scale, scale);
+  ctx.drawImage(img, 0, 0);
+  ctx.restore();
+}
+
 // Función para detectar el color del píxel en la posición clicada
 canvas.addEventListener('click', (e) => {
   const rect = canvas.getBoundingClientRect();
-  const x = Math.floor(e.clientX - rect.left);
-  const y = Math.floor(e.clientY - rect.top);
+  const x = Math.floor((e.clientX - rect.left - panX) / scale);
+  const y = Math.floor((e.clientY - rect.top - panY) / scale);
 
   const pixelData = ctx.getImageData(x, y, 1, 1).data;
   const [r, g, b, a] = pixelData;
@@ -39,6 +54,36 @@ canvas.addEventListener('click', (e) => {
 
   colorInfo.innerText = `Color: ${rgbaColor} | HEX: ${hexColor}`;
   colorInfo.style.color = hexColor;
+});
+
+// Zoom con la rueda del ratón
+canvas.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const zoomIntensity = 0.1;
+  scale += e.deltaY < 0 ? zoomIntensity : -zoomIntensity;
+  scale = Math.min(Math.max(0.5, scale), 3); // Limita el zoom entre 0.5x y 3x
+  drawImage();
+});
+
+// Desplazamiento de la imagen
+canvas.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+  canvas.style.cursor = 'grabbing';
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    panX = e.clientX - startX;
+    panY = e.clientY - startY;
+    drawImage();
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  isDragging = false;
+  canvas.style.cursor = 'grab';
 });
 
 // Función para convertir RGB a HEX
