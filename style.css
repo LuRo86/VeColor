@@ -44,7 +44,7 @@ header h1 {
 .canvas-container {
   position: relative;
   width: 100%;
-  height: 300px; /* Ocupa más espacio vertical */
+  height: 450px; /* Ocupa más espacio vertical */
   display: flex;
   align-items: center;
   justify-content: center;
