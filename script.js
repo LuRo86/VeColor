@@ -3,16 +3,18 @@ const ctx = canvas.getContext('2d');
 const upload = document.getElementById('upload');
 const colorInfo = document.getElementById('color-info');
 
-// Función para cargar la imagen seleccionada en el canvas
+// Función para cargar la imagen seleccionada en el canvas y ajustarla al tamaño del canvas
 upload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.onload = (event) => {
     const img = new Image();
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
+      const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+      const x = (canvas.width / 2) - (img.width / 2) * scale;
+      const y = (canvas.height / 2) - (img.height / 2) * scale;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+      ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     };
     img.src = event.target.result;
   };
