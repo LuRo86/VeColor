@@ -3,31 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detección de color de píxel</title>
+  <title>Vecoor - Detección de Color</title>
   <style>
+    /* Diseño general */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      background-color: #f0f0f0;
+      min-height: 100vh;
+      background-color: #E3F2FD;
+      font-family: Arial, sans-serif;
     }
+
+    /* Estilo del contenedor */
+    .container {
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #0D47A1;
+      margin-bottom: 20px;
+    }
+
+    /* Estilos para el canvas */
     canvas {
-      border: 1px solid black;
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #0D47A1;
+      border-radius: 8px;
+      margin-top: 15px;
       cursor: crosshair;
     }
+
+    #upload {
+      display: block;
+      margin: 0 auto;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 1rem;
+      color: #0D47A1;
+      border: 1px solid #0D47A1;
+      border-radius: 8px;
+      background-color: #FFF;
+      cursor: pointer;
+    }
+
     #color-info {
       margin-top: 10px;
-      font-size: 1.2rem;
+      font-size: 1rem;
+      color: #0D47A1;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <input type="file" id="upload" accept="image/*">
-  <canvas id="canvas"></canvas>
-  <div id="color-info">Haz clic en la imagen para detectar el color</div>
-
+  <div class="container">
+    <h1>Vecoor - Detección de Color</h1>
+    <input type="file" id="upload" accept="image/*">
+    <canvas id="canvas"></canvas>
+    <div id="color-info">Haz clic en la imagen para detectar el color</div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
