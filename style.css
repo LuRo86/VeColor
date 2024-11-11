@@ -10,14 +10,27 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #FFFFFF; /* Fondo completamente blanco */
   font-family: Arial, sans-serif;
 }
 
+/* Encabezado con logo en la esquina superior izquierda */
+header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: #7A6DE3;
+  margin: 0;
+}
+
 /* Estilo del contenedor */
 .container {
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   text-align: center;
   background-color: #fff;
@@ -26,13 +39,6 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-  font-size: 1.5rem;
-  color: #7A6DE3;
-  margin-bottom: 20px;
-}
-
-/* Estilos para el canvas */
 canvas {
   width: 100%;
   max-width: 100%;
@@ -44,7 +50,7 @@ canvas {
 
 #upload {
   display: block;
-  width: 100%; /* Asegura que el input de archivo se ajuste al contenedor */
+  width: 100%; /* Ajusta el ancho al contenedor */
   margin: 0 auto;
   margin-top: 15px;
   padding: 10px;
@@ -54,7 +60,7 @@ canvas {
   border-radius: 8px;
   background-color: #FFF;
   cursor: pointer;
-  box-sizing: border-box; /* Para evitar que el padding aumente el tamaño */
+  box-sizing: border-box; /* Evita que el padding aumente el tamaño */
 }
 
 #detect-button {
