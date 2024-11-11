@@ -7,19 +7,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>VeColor</h1>
-  </header>
-  <div class="container">
+  <!-- Pantalla principal -->
+  <div class="container main-screen">
+    <header>
+      <h1>VeColor</h1>
+    </header>
     <input type="file" id="upload" accept="image/*">
     <canvas id="canvas"></canvas>
     <button id="detect-button">Detectar color</button>
     <div id="color-info">A presionado</div>
   </div>
+
+  <!-- Pantalla de configuración -->
+  <div class="container config-screen" style="display: none;">
+    <header>
+      <h1>Configuración</h1>
+    </header>
+    <label class="toggle-switch">
+      <input type="checkbox" id="voiceToggle">
+      <span class="slider"></span>
+    </label>
+    <span>Lectura por voz</span>
+  </div>
+
+  <!-- Footer de navegación -->
   <footer>
-    <button class="nav-button">Detección</button>
-    <button class="nav-button">Config</button>
+    <button class="nav-button" onclick="showMainScreen()">Detección</button>
+    <button class="nav-button" onclick="showConfigScreen()">Config</button>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
