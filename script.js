@@ -3,18 +3,33 @@ const ctx = canvas.getContext('2d');
 const upload = document.getElementById('upload');
 const colorInfo = document.getElementById('color-info');
 
+let img = new Image();
+
 // Función para cargar la imagen seleccionada en el canvas
 upload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.onload = (event) => {
-    const img = new Image();
+    img = new Image();
     img.onload = () => {
-      // Configura el tamaño del canvas según el tamaño real de la imagen
-      canvas.width = img.width;
-      canvas.height = img.height;
+      // Determina el tamaño del cuadrado basado en la menor dimensión de la imagen
+      const squareSize = Math.min(img.width, img.height);
+
+      // Ajusta el tamaño del canvas para que sea cuadrado
+      canvas.width = squareSize;
+      canvas.height = squareSize;
+
+      // Encuentra las coordenadas para centrar el recorte
+      const offsetX = (img.width - squareSize) / 2;
+      const offsetY = (img.height - squareSize) / 2;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
-      ctx.drawImage(img, 0, 0); // Dibuja la imagen en el canvas
+      ctx.drawImage(
+        img,
+        offsetX, offsetY, squareSize, squareSize, // Recorte de la imagen
+        0, 0, canvas.width, canvas.height       // Área del canvas
+      );
+
       colorInfo.innerText = "Pulsa en algún lugar de la imagen para detectar color";
       colorInfo.style.color = "#7A6DE3";
     };
@@ -26,17 +41,23 @@ upload.addEventListener('change', (e) => {
 // Función para detectar el color del píxel en la posición clicada
 canvas.addEventListener('click', (e) => {
   const rect = canvas.getBoundingClientRect();
-  const x = Math.floor(e.clientX - rect.left);
-  const y = Math.floor(e.clientY - rect.top);
+  const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+  const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
 
   const pixelData = ctx.getImageData(x, y, 1, 1).data;
   const [r, g, b, a] = pixelData;
 
-  const rgbaColor = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-  const hexColor = rgbToHex(r, g, b);
+  // Verifica si el píxel es válido (no transparente)
+  if (a === 0) {
+    colorInfo.innerText = "No se detectó color en esta área.";
+    colorInfo.style.color = "#000000";
+  } else {
+    const rgbaColor = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+    const hexColor = rgbToHex(r, g, b);
 
-  colorInfo.innerText = `Color: ${rgbaColor} | HEX: ${hexColor}`;
-  colorInfo.style.color = hexColor;
+    colorInfo.innerText = `Color: ${rgbaColor} | HEX: ${hexColor}`;
+    colorInfo.style.color = hexColor;
+  }
 });
 
 // Función para convertir RGB a HEX
