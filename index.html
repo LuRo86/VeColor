@@ -12,7 +12,10 @@
     <header>
       <h1>VeColor</h1>
     </header>
-    <input type="file" id="upload" accept="image/*">
+    <div class="upload-container">
+      <input type="file" id="upload" accept="image/*" style="display: none;">
+      <label for="upload" class="upload-button">Seleccionar archivo</label>
+    </div>
     <div class="canvas-container">
       <canvas id="canvas"></canvas>
     </div>
